@@ -8,6 +8,8 @@ import {
   ImageBackground,
   StatusBar,
   TouchableOpacity,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -60,8 +62,13 @@ export default function App() {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#156472',
-    width: '100%',
-    height: '100%',
+    width: Dimensions.get('window').width, //for full screen
+    height: Dimensions.get('window').height, //for full screen
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     alignItems: 'center',
   },
   logo: {
