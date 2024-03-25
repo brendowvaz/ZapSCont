@@ -13,13 +13,14 @@ import {
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import Input from '../components/input';
 
 export default function App() {
   const [value, setValue] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [valid, setValid] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-  const phoneInput = useRef<PhoneInput>(null);
+  // const phoneInput = useRef < PhoneInput > null;
 
   return (
     <SafeAreaView>
@@ -30,7 +31,7 @@ export default function App() {
         <Image
           style={styles.logo}
           source={require('../assets/images/logo.png')}></Image>
-        <PhoneInput
+        {/*   <PhoneInput
           ref={phoneInput}
           defaultValue={value}
           defaultCode="BR"
@@ -44,7 +45,7 @@ export default function App() {
           withDarkTheme
           withShadow
           autoFocus
-        />
+        /> */}
         <TouchableOpacity
           /*  style={styles.button} */
           onPress={() => {
@@ -54,10 +55,28 @@ export default function App() {
           }}>
           <Text>Check</Text>
         </TouchableOpacity>
+        <View style={styles.form}>
+          <Input
+            label="Nome"
+            onBlur={handleBlur('number')}
+            onChangeText={handleChange('number')}
+            error={'Nome inválido'}
+          />
+        </View>
       </ImageBackground>
     </SafeAreaView>
   );
 }
+
+const validationSchema = Yup.object({
+  name: Yup.string()
+    .required(Errors.generic.required)
+    .max(75, Errors.generic.tooLong),
+  document: Yup.string().required(Errors.generic.required).length(15),
+  cvv: Yup.string().length(4).required(),
+  number: Yup.string().required(),
+  dueDate: Yup.string().required(Errors.generic.required).max(7),
+});
 
 const styles = StyleSheet.create({
   background: {
@@ -76,5 +95,9 @@ const styles = StyleSheet.create({
     height: 178,
     marginTop: 50,
     marginBottom: 50,
+  },
+  form: {
+    width: '100%',
+    paddingHorizontal: 40,
   },
 });
