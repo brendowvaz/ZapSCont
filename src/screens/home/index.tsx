@@ -2,21 +2,19 @@ import React, {useState, useRef} from 'react';
 import {
   SafeAreaView,
   View,
-  StyleSheet,
   Text,
+  StyleSheet,
   Image,
   ImageBackground,
   StatusBar,
-  TouchableOpacity,
   Dimensions,
-  ScrollView,
 } from 'react-native';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
-import PhoneInput from 'react-native-phone-number-input';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-import Input from '../../components/input';
+import {Input, Button, PhoneNumberInput} from '../../components';
+import colors from '../../assets/others/colors';
+import {AddIcon, HistoryIcon, ContactsIcon} from '../../assets/others/svg';
 
 const INITIAL_VALUES = {
   name: '',
@@ -26,7 +24,7 @@ const INITIAL_VALUES = {
   cvv: '',
 };
 
-export default function App() {
+const Home = () => {
   const onSubmit = async () => {
     /* const result = await onConsultCoords(values);
     dispatch({
@@ -62,16 +60,38 @@ export default function App() {
           source={require('../../assets/images/logo.png')}></Image>
 
         <View style={styles.form}>
-          <Input
-            label="Nome"
-            onBlur={handleBlur('number')}
-            error={'Nome inválido'}
-          />
+          <PhoneNumberInput />
+          <Input label="Nome" onBlur={handleBlur('name')} error={errors.name} />
+          <Button
+            title={'Abrir WhatsApp'}
+            onPress={() => {}}
+            icon="upload"></Button>
+          <Button
+            title={'Salvar telefone'}
+            onPress={() => {}}
+            icon="save"></Button>
+        </View>
+        <View style={styles.menu}>
+          <View>
+            <ContactsIcon size={50} color={colors.secondary} />
+            <Text style={styles.menu_text}>Agenda</Text>
+          </View>
+          <View style={styles.menu_icon_add}>
+            <View style={styles.menu_icon_add_circule} />
+            <AddIcon size={60} color={colors.secondary} />
+            <Text style={styles.menu_text}>Novo Telefone</Text>
+          </View>
+          <View>
+            <HistoryIcon size={50} color={colors.secondary} />
+            <Text style={styles.menu_text}>Histórico</Text>
+          </View>
         </View>
       </ImageBackground>
     </SafeAreaView>
   );
-}
+};
+
+export default Home;
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -86,23 +106,52 @@ const validationSchema = Yup.object({
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#156472',
-    width: Dimensions.get('window').width, //for full screen
-    height: Dimensions.get('window').height, //for full screen
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height + 80,
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     alignItems: 'center',
+    zIndex: -50,
   },
   logo: {
     width: 150,
     height: 178,
     marginTop: 50,
-    marginBottom: 50,
+    marginBottom: 100,
   },
   form: {
     width: '100%',
     paddingHorizontal: 40,
+  },
+  menu: {
+    position: 'absolute',
+    bottom: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: Dimensions.get('window').width,
+    height: 80,
+    backgroundColor: colors.white,
+  },
+  menu_text: {
+    color: colors.secondary,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  menu_icon_add: {
+    width: 60,
+    position: 'relative',
+    bottom: 25,
+    alignItems: 'center',
+  },
+  menu_icon_add_circule: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    position: 'absolute',
+    bottom: 5,
+    backgroundColor: colors.white,
   },
 });

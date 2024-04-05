@@ -3,6 +3,7 @@ export default colors = {
   secondary: '#075E54',
 
   white: '#FFFFFF',
+  black: '#000000',
   red: '#FF7F7F',
 
   grey600: '#3b3b3b',
